@@ -1,8 +1,8 @@
 
 import numpy as np
-from npcompdec import DecMap
 import matplotlib.pyplot as plt
 from mpl_toolkits.basemap import Basemap
+from npcompdec import DecMap
 
 
 def plotWorldDec(coords, res, bbox):
