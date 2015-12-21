@@ -1,3 +1,3 @@
 # Declination map
-Data from World Magnetic Model:
+Testing and plotting declination data from World Magnetic Model:
 http://www.ngdc.noaa.gov/geomag/WMM/DoDWMM.shtml

@@ -39,7 +39,7 @@ def plotWorldDec(coords, res, bbox):
 def main():
     #(Maximum latitude, Maximum Longitude, lat_min, lon_min)
     bbox = (85., 180., -85., -180.)
-    prec = 1
+    prec = 2 # 2 degrees of precision
     decmap = DecMap()
     coords, res = decmap.build(bbox, prec)
 
