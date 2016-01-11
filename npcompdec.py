@@ -1,14 +1,33 @@
+# -*- coding: utf-8 -*-
+#
+#  Author: Cayetano Benavent, 2015-2016.
+#
+#  This program is free software; you can redistribute it and/or modify
+#  it under the terms of the GNU General Public License as published by
+#  the Free Software Foundation; either version 2 of the License, or
+#  (at your option) any later version.
+#
+#  This program is distributed in the hope that it will be useful,
+#  but WITHOUT ANY WARRANTY; without even the implied warranty of
+#  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#  GNU General Public License for more details.
+#
+#  You should have received a copy of the GNU General Public License
+#  along with this program; if not, write to the Free Software
+#  Foundation, Inc., 51 Franklin Street, Fifth Floor, Boston,
+#  MA 02110-1301, USA.
+#
 
-"""
-Data from World Magnetic Model:
-http://www.ngdc.noaa.gov/geomag/WMM/DoDWMM.shtml
-"""
 
 import numpy as np
 import geomag
 
 
 class DecMap(object):
+    """
+    Data from World Magnetic Model:
+    http://www.ngdc.noaa.gov/geomag/WMM/DoDWMM.shtml
+    """
 
     def __genLatLon(self, bbox, prec):
         """
@@ -22,11 +41,9 @@ class DecMap(object):
         return np.meshgrid(lat, lon, sparse=False, indexing='xy')
 
 
-    def __magDec(self, lat, lon, wmmfl):
+    def __magDec(self, gm, lat, lon):
         """
         """
-        gm = geomag.geomag.GeoMag(wmmfl)
-
         mag = gm.GeoMag(lat,lon)
 
         return mag.dec
@@ -39,7 +56,9 @@ class DecMap(object):
 
         lat, lon = coords
 
+        gm = geomag.geomag.GeoMag(wmmfl)
+
         vectMagDec = np.vectorize(self.__magDec)
-        res = vectMagDec(lat, lon, wmmfl)
+        res = vectMagDec(gm, lat, lon)
 
         return(coords, res)
