@@ -23,7 +23,7 @@ import numpy as np
 import geomag
 
 
-class DecMap(object):
+class NpCompDec(object):
     """
     Data from World Magnetic Model:
     http://www.ngdc.noaa.gov/geomag/WMM/DoDWMM.shtml
@@ -35,8 +35,8 @@ class DecMap(object):
 
         lat_max, lon_max, lat_min, lon_min = bbox
 
-        lat = np.linspace(lat_max, lat_min, (180. * prec) + 1)
-        lon = np.linspace(lon_min, lon_max, (360. * prec) + 1)
+        lat = np.linspace(lat_max, lat_min, (abs(lat_min - lat_max) * prec) + 1)
+        lon = np.linspace(lon_min, lon_max, (abs(lon_min - lon_max) * prec) + 1)
 
         return np.meshgrid(lat, lon, sparse=False, indexing='xy')
 
