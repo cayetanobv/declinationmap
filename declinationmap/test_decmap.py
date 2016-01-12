@@ -18,7 +18,7 @@
 #  MA 02110-1301, USA.
 #
 
-
+from datetime import date
 from decmap import DecMap
 
 
@@ -30,9 +30,10 @@ def runTestBbox():
     #(Maximum latitude, Maximum Longitude, Minimum latitude, Minimum longitude)
     bbox = (60., 20., 30, -20.)
     sp_rst = 2
+    time = date(2016, 1, 1)
 
     decmap = DecMap(bbox, sp_rst)
-    decmap.build(out_raster, out_vector, ct_itv=2)
+    decmap.build(out_raster, out_vector, time=time, ct_itv=2)
 
 def runTestWorld():
 
