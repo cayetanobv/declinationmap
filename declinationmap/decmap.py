@@ -40,12 +40,12 @@ class DecMap(object):
         self.__bbox = bbox
         self.__sp_rst = sp_rst
 
-    def __getDec(self, bbox, prec=1):
+    def __getDec(self, bbox, time, prec=1):
         """
         Getting declinations...
         """
         npdec = NpCompDec()
-        coords, dec_data = npdec.build(bbox, prec)
+        coords, dec_data = npdec.build(bbox, prec, time)
 
         return(coords, dec_data)
 
@@ -90,12 +90,12 @@ class DecMap(object):
         vect_ds = None
         src_raster = None
 
-    def build(self, out_raster, out_vector, ct_itv=4):
+    def build(self, out_raster, out_vector, time=None, ct_itv=4):
         """
         out_raster, out_vector: out filepaths
         ct_itv: contour interval
         """
-        coords, dec_data = self.__getDec(self.__bbox, self.__sp_rst)
+        coords, dec_data = self.__getDec(self.__bbox, time, self.__sp_rst)
         geotr = self.__getGeotransform(self.__bbox, self.__sp_rst)
 
         self.__buildRasterLayer(dec_data.T, geotr, out_raster)

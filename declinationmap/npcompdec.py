@@ -41,24 +41,27 @@ class NpCompDec(object):
         return np.meshgrid(lat, lon, sparse=False, indexing='xy')
 
 
-    def __magDec(self, gm, lat, lon):
+    def __magDec(self, gm, lat, lon, time):
         """
         """
-        mag = gm.GeoMag(lat,lon)
+        if time:
+            mag = gm.GeoMag(lat,lon, time=time)
+        else:
+            mag = gm.GeoMag(lat,lon)
 
         return mag.dec
 
 
-    def build(self, bbox, prec, wmmfl="data/WMM.COF"):
+    def build(self, bbox, sp_rst, time, wmmfl="data/WMM.COF"):
         """
         """
-        coords = self.__genLatLon(bbox, prec)
+        coords = self.__genLatLon(bbox, sp_rst)
 
         lat, lon = coords
 
         gm = geomag.geomag.GeoMag(wmmfl)
 
         vectMagDec = np.vectorize(self.__magDec)
-        res = vectMagDec(gm, lat, lon)
+        res = vectMagDec(gm, lat, lon, time)
 
         return(coords, res)
