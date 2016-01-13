@@ -19,7 +19,7 @@
 #
 
 import numpy as np
-from osgeo import gdal, ogr
+from osgeo import gdal, ogr, osr
 from npcompdec import NpCompDec
 
 
@@ -49,6 +49,14 @@ class DecMap(object):
 
         return(coords, dec_data)
 
+    def __getSpatialRef(self, crs_epsg):
+        """
+        Getting spatial reference from EPSG code
+        """
+        sp_ref = osr.SpatialReference()
+        sp_ref.ImportFromEPSG(crs_epsg)
+        return sp_ref
+
     def __getGeotransform(self, bbox, prec):
         """
         Getting geotransformation (affine transform) from array data
@@ -57,27 +65,32 @@ class DecMap(object):
         spat_res = 1. / prec
         return(bbox[3], spat_res, 0, bbox[0], 0, spat_res * -1)
 
-    def __buildRasterLayer(self, data, geotransform, dst_filepath):
+    def __buildRasterLayer(self, data, geotransform, dst_filepath, crs_epsg=4326):
         """
         Building raster data
         """
         cols, rows = data.shape
 
+        sp_ref = self.__getSpatialRef(crs_epsg)
+
         driver = gdal.GetDriverByName("GTiff")
         dst_ds = driver.Create(dst_filepath, rows, cols, 1, gdal.GDT_Float32)
 
         dst_ds.SetGeoTransform(geotransform)
+        dst_ds.SetProjection(sp_ref.ExportToWkt())
         band = dst_ds.GetRasterBand(1)
         band.WriteArray(data)
 
         dst_ds=None
 
-    def __buildContours(self, raster_flpath, vect_flpath, ct_itv):
+    def __buildContours(self, raster_flpath, vect_flpath, ct_itv, crs_epsg=4326):
         """
         Building declination contours
         """
+        sp_ref = self.__getSpatialRef(crs_epsg)
+
         vect_ds = ogr.GetDriverByName('ESRI Shapefile').CreateDataSource(vect_flpath)
-        vect_lyr = vect_ds.CreateLayer(vect_flpath, geom_type=ogr.wkbLineString25D)
+        vect_lyr = vect_ds.CreateLayer(vect_flpath, sp_ref, geom_type=ogr.wkbLineString25D)
         field_defn = ogr.FieldDefn('id', ogr.OFTInteger)
         vect_lyr.CreateField(field_defn)
         field_defn = ogr.FieldDefn('dec', ogr.OFTReal)
