@@ -1,6 +1,8 @@
 # Declination map
-Computing declination data from World Magnetic Model (http://www.ngdc.noaa.gov/geomag/WMM/DoDWMM.shtml) for entire world or for a given bounding box.
+Computing declination data from World Magnetic Model for entire world or for a given bounding box.
 Outputs are GIS files: raster (GeoTiff) and vector (Shapefile).
+
+The World Magnetic Model (WMM) is produced for the U.S. and U.K. defense agencies with guaranteed quality, user support, and updates. The WMM is a predictive-only model and is valid for the current epoch, 2014-2019. WMM model details: http://ngdc.noaa.gov/geomag/WMM.
 
 ## About author
 Developed by Cayetano Benavent.

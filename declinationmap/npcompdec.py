@@ -26,7 +26,7 @@ import geomag
 class NpCompDec(object):
     """
     Data from World Magnetic Model:
-    http://www.ngdc.noaa.gov/geomag/WMM/DoDWMM.shtml
+    http://ngdc.noaa.gov/geomag/WMM
     """
 
     def __genLatLon(self, bbox, prec):
