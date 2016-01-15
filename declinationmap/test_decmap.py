@@ -24,28 +24,28 @@ from decmap import DecMap
 
 def runTestBbox():
 
-    out_vector = "/tmp/dec_contours_bbox.shp"
-    out_raster = "/tmp/dec_bbox.tif"
+    out_vector = "/tmp/decmaps_testbbox/dec_contours_bbox.shp"
+    out_raster = "/tmp/decmaps_testbbox/dec_bbox.tif"
 
     #(Maximum latitude, Maximum Longitude, Minimum latitude, Minimum longitude)
     bbox = (60., 20., 30, -20.)
     sp_rst = 2
-    time = date(2016, 1, 1)
+    time = date(2018, 1, 1)
 
     decmap = DecMap(bbox, sp_rst)
-    decmap.build(out_raster, out_vector, time=time, ct_itv=2)
+    decmap.build(out_raster, out_vector, time=time, ct_itv=1)
 
 def runTestWorld():
 
-    out_vector = "/tmp/dec_contours_world.shp"
-    out_raster = "/tmp/dec_world.tif"
+    out_vector = "/tmp/decmaps_testworld/dec_contours_world.shp"
+    out_raster = "/tmp/decmaps_testworld/dec_world.tif"
 
     #(Maximum latitude, Maximum Longitude, Minimum latitude, Minimum longitude)
     bbox = (85., 180., -85., -180.)
     sp_rst = 1
 
     decmap = DecMap(bbox, sp_rst)
-    decmap.build(out_raster, out_vector, ct_itv=4)
+    decmap.build(out_raster, out_vector, ct_itv=2)
 
 if __name__ == '__main__':
     print("Running test 1...")

@@ -57,9 +57,9 @@ def plotWorldDec(coords, res, bbox):
 def testMatplotlib():
     #(Maximum latitude, Maximum Longitude, lat_min, lon_min)
     bbox = (85., 180., -85., -180.)
-    sp_rst = 2
+    sp_rst = 1
     time = None
-    
+
     npdec = NpCompDec()
     coords, res = npdec.build(bbox, sp_rst, time)
 
