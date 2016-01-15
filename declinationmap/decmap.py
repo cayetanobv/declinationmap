@@ -18,6 +18,8 @@
 #  MA 02110-1301, USA.
 #
 
+import os
+import shutil
 import numpy as np
 from osgeo import gdal, ogr, osr
 from npcompdec import NpCompDec
@@ -103,11 +105,25 @@ class DecMap(object):
         vect_ds = None
         src_raster = None
 
-    def build(self, out_raster, out_vector, time=None, ct_itv=4):
+    def __createNewDir(self, dir_path):
+        """
+        Helper method...
+        """
+        if os.path.exists(dir_path):
+            print "Removed previous folder: {}".format(dir_path)
+            shutil.rmtree(dir_path)
+        os.makedirs(dir_path)
+        print "Created new folder: {}".format(dir_path)
+
+    def build(self, out_raster, out_vector, overwrite=True, time=None, ct_itv=4):
         """
         out_raster, out_vector: out filepaths
         ct_itv: contour interval
         """
+        if overwrite:
+            self.__createNewDir(os.path.dirname(out_raster))
+            self.__createNewDir(os.path.dirname(out_vector))
+
         coords, dec_data = self.__getDec(self.__bbox, time, self.__sp_rst)
         geotr = self.__getGeotransform(self.__bbox, self.__sp_rst)
 
