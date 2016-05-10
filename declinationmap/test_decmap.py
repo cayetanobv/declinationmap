@@ -31,9 +31,10 @@ def runTestBbox():
     bbox = (60., 20., 30, -20.)
     sp_rst = 2
     time = date(2018, 1, 1)
+    print("Bounding Box: {0}".format(bbox))
 
     decmap = DecMap(bbox, sp_rst)
-    decmap.build(out_raster, out_vector, time=time, ct_itv=1)
+    decmap.build(out_raster, out_vector, time=time, ct_itv=.5)
 
 def runTestWorld():
 
@@ -43,6 +44,7 @@ def runTestWorld():
     #(Maximum latitude, Maximum Longitude, Minimum latitude, Minimum longitude)
     bbox = (85., 180., -85., -180.)
     sp_rst = 1
+    print("Bounding Box: {0}".format(bbox))
 
     decmap = DecMap(bbox, sp_rst)
     decmap.build(out_raster, out_vector, ct_itv=2)
